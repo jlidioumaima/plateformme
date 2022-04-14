@@ -1,0 +1,33 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+<div class="content">
+  <div class="card-header header-elements-inline" style="background-color:Teal">
+						<h3 class="card-title" style="color:white" >Modifier l'image de l'hotel : {{hotel.nom}}</h3>
+						<div class="header-elements">
+							 <a class="btn btn-info" style="width:50px" href="{{ path('app_hotel_index') }}"><i class="icon-reply"></i> </a>
+	                	</div>
+					</div>
+   
+						<div class="header-elements">
+	                	</div>
+				
+					<br />
+   	<div class="card">
+							
+							<div class="card-body">
+                          
+    {# Si la route est "annonces_edit on affiche les images #}
+	{% if app.request.attributes.get('_route') == 'app_hotel_edit' %}
+  
+      
+        {% for image in hotel.images %}
+            <div>
+                <img src="{{ asset('/uploads/'~image.name) }}" alt="" width="300" height="300">
+
+                {# On ajoute un lien permettant de supprimer une image (sera géré en Ajax) #}
+                <a href="{{path("hotel_delete_image", {id: image.id})}}" data-delete data-token="{{ csrf_token('delete' ~ image.id )}}">Supprimer</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <button  class="btn btn-info" style="width:100px;margin-left: 90%;position: relative;"  > <i class="icon-floppy-disk"></i> {{ button_label|default('Valider') }}</button>
+{{ form_end(form) }}

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block script %}
+	<script src="{{ asset('admin/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"> </script>
+	<script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"> </script>   
+{% endblock %}
+
+{% block content %}
+   <div class="content">
+  
+              
+           
+   <div class="card-header header-elements-inline" style="background-color: #007682b5;" style="padding-bottom:100px">
+  
+						<h3 class="card-title" style="color:white">Liste des Reservations</h3>
+                        <div class="header-elements"  >
+							 <a class="btn btn-dark" style="width:170px" href="{{ path('app_reservation_new') }}"><i class="icon-user-plus"></i> Ajouter Reservation</a>
+	                	</div>
+
+                           </div><br>
+                           
+                           <div class="card">
+						
+							<div class="card-body">
+    <table class="table datatable-basic dataTable no-footer" id="DataTables_Table_0"  ="grid" aria-describedby="DataTables_Table_0_info">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DateDebut</th>
+                <th>DateFin</th>    
+                <th>DateCreation</th>
+                <th>DateConfirmation</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.dateDebut ? reservation.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.dateFin ? reservation.dateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.dateCreation ? reservation.dateCreation|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.dateConfirmation ? reservation.dateConfirmation|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.status }}</td>
+                <td colspan="3">
+                <center>
+                    {{ include('reservation/show.html.twig') }}                    
+                    <a class="btn edit btn-warning"  href="{{ path('app_reservation_edit', {'id': reservation.id}) }}"style="width:40px"><i class="icon-pencil"></i></a>
+                    {{ include('reservation/_delete_form.html.twig') }}
+                   </center>
+            </td>
+            </tr>
+               
+        {% else %}
+        
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+             
+       {% endfor %} 
+        </tbody>
+         
+    </table>
+  
+{% endblock %}

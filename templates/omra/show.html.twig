@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block titlepage %}Omra{% endblock %}
+
+{% block content %}
+<div class="content">
+  
+              
+           
+   <div class="card-header header-elements-inline" style="background-color: #007682b5;" style="padding-bottom:100px">
+  
+						<h3 class="card-title" style="color:white">Details du Omra :{{omra.titre}}</h3>
+                        <div class="header-elements"  >
+							 <a class="btn btn-dark" style="width:150px" href="{{ path('app_omra_index') }}"><i class="icon-reply"></i> Liste des Omra</a>
+	                	</div>
+
+                           </div><br>
+                           
+                           <div class="card">
+						
+							<div class="card-body">
+    <table class="table datatable-basic dataTable no-footer" id="DataTables_Table_0"  ="grid" aria-describedby="DataTables_Table_0_info">
+  
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ omra.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ omra.titre }}</td>
+            </tr>
+          
+            
+            <tr>
+                <th>Hotel</th>
+                <td>{{ omra.hotel }}</td>
+            </tr>
+            <tr>
+                <th>Inclus</th>
+                <td>{{ omra.inclus }}</td>
+            </tr>
+            <tr>
+                <th>Non_Inclus</th>
+                <td>{{ omra.NonInclus }}</td>
+            </tr>
+             
+                            <tr>
+                                   <th>Images</th>
+                                  
+                                   <td>
+                            {% if app.request.attributes.get('_route') == 'app_omra_show' %}
+  
+      
+        
+   {% for image in omra.images %}
+            <div>
+           
+                <img src="{{ asset('/uploads/'~image.name) }}" alt="" width="90" height="90">
+
+                {# On ajoute un lien permettant de supprimer une image (sera géré en Ajax) #}
+                
+            </div>
+        {% endfor %}
+        </td></tr>
+        {%endif%}
+        </tbody>
+    </table>
+        </div>
+        </div>
+        </div>
+         <div class="content">
+  
+              
+           
+   <div class="card-header header-elements-inline" style="background-color: #007682b5;" style="padding-bottom:100px">
+  
+						<h3 class="card-title" style="color:white"> Liste des GrilleTarifaires </h3>
+                        <div class="header-elements"  >
+							 <a class="btn btn-dark" style="width:170px" href="{{ path('app_tarifaire_new') }}"><i class="icon-user-plus"></i> Ajouter GrilleTarifaire</a>
+	                	</div>
+                           </div>
+                           
+                           <div class="card">
+						
+							<div class="card-body">
+    <table class="table datatable-basic dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+        <thead>
+            <tr>
+                <th>Id</th>
+              
+                <th>Date Debut</th>
+                <th>Date Fin</th>
+             
+                <th>Hotel</th>
+               
+                <th>prix</th>
+                <th colspan="3"><center>actions</center></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for grille_tarifaire in grille_tarifaires %}
+            <tr>
+                <td>{{ grille_tarifaire.id }}</td>
+               
+                <td>{{ grille_tarifaire.dateDebut ? grille_tarifaire.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ grille_tarifaire.dateFin ? grille_tarifaire.dateFin|date('Y-m-d') : '' }}</td>
+              
+                <td>{{ grille_tarifaire.hotel }}</td>
+            
+                <td>{{ grille_tarifaire.prix }}</td>
+               <td colspan="3">
+                <center>
+                   <a class="btn edit btn-info"  href="{{ path('app_tarifaire_show', {'id': grille_tarifaire.id}) }}"style="width:40px"><i class="icon-eye2"></i></a>
+                     <a class="btn edit btn-warning"  href="{{ path('app_tarifaire_edit', {'id': grille_tarifaire.id}) }}"style="width:40px"><i class="icon-pencil"></i></a>
+                    {{ include('tarifaire/_delete_form.html.twig') }}
+                   </center>
+            </td>
+            </tr>
+               
+        {% else %}
+        
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+             
+       {% endfor %} 
+        </tbody>
+         
+    </table>
+     
+
+    
+   
+
+
+{% endblock %}

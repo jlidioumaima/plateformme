@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block titlepage %}New Sites{% endblock %}
+
+{% block content %}
+    <h1>Create new Sites</h1>
+
+    {{ include('sites/_form.html.twig') }}
+
+    <a href="{{ path('app_sites_index') }}">back to list</a>
+{% endblock %}
